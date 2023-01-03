@@ -7,6 +7,6 @@ import (
 type Comment struct {
 	gorm.Model
 	Content  string `json:"content"`
-	UserID   string `json:"userid"`
+	UserID   int32  `json:"userid"`
 	ThreadID uint   `json:"threadid"`
 }

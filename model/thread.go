@@ -8,6 +8,6 @@ type Thread struct {
 	gorm.Model
 	Title    string    `json:"title"`
 	Content  string    `json:"content"`
-	UserID   string    `json:"userid"`
+	UserID   int32     `json:"userid"`
 	Comments []Comment `json:"comments"`
 }

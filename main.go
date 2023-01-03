@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 
+	"github.com/gdsc-ys/sprint4-jira-thread/auth"
 	"github.com/gdsc-ys/sprint4-jira-thread/controller"
 	"github.com/gdsc-ys/sprint4-jira-thread/database"
 )
@@ -11,6 +12,8 @@ func main() {
 	router := gin.Default()
 
 	database.ConnectDatabase()
+
+	router.Use(auth.TokenAuthMiddleware)
 
 	thread := router.Group("/thread")
 	{

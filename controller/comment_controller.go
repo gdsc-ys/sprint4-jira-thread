@@ -33,6 +33,8 @@ func CreateThreadComment(c *gin.Context) {
 		return
 	}
 
+	comment.UserID = c.MustGet("userid").(int32)
+
 	if err := database.DB.Create(&comment).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
