@@ -19,4 +19,14 @@ func main() {
 		thread.PUT("/:threadID", controller.UpdateThread)
 		thread.DELETE("/:threadID", controller.DeleteThread)
 	}
+
+	comment := router.Group("/comment")
+	{
+		comment.GET("/:threadID", controller.ReadAllThreadComment)
+		comment.POST("/:threadID", controller.CreateThreadComment)
+		comment.PUT("/:threadID/:commentID", controller.UpdateThreadComment)
+		comment.DELETE("/:threadID/:commentID", controller.DeleteThreadComment)
+	}
+
+	router.Run(":8080")
 }

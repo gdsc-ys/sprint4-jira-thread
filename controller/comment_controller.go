@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 
+	"github.com/gdsc-ys/sprint4-jira-thread/database"
 	"github.com/gdsc-ys/sprint4-jira-thread/model"
 	"github.com/gin-gonic/gin"
 )
@@ -10,7 +11,7 @@ import (
 func ReadAllThreadComment(c *gin.Context) {
 	comments := []model.Comment{}
 
-	if err := database.db.Find(&comments, c.param("threadID")).Error; err != nil {
+	if err := database.DB.Where("thread_id = ?", c.Param("threadID")).Find(&comments).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
@@ -32,7 +33,7 @@ func CreateThreadComment(c *gin.Context) {
 		return
 	}
 
-	if err := database.db.Create(&comment).Error; err != nil {
+	if err := database.DB.Create(&comment).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
@@ -55,14 +56,14 @@ func UpdateThreadComment(c *gin.Context) {
 		return
 	}
 
-	if err := database.db.First(&oldComment, c.param("commentID")).Error; err != nil {
+	if err := database.DB.First(&oldComment, c.Param("commentID")).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
 		return
 	}
 
-	if err := database.db.Model(&oldComment).Updates(comment).Error; err != nil {
+	if err := database.DB.Model(&oldComment).Updates(comment).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
@@ -77,7 +78,7 @@ func UpdateThreadComment(c *gin.Context) {
 func DeleteThreadComment(c *gin.Context) {
 	comment := model.Comment{}
 
-	if err := database.db.Delete(&comment, c.param("commentID")).Error; err != nil {
+	if err := database.DB.Delete(&comment, c.Param("commentID")).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})

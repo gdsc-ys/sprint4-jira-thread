@@ -1,7 +1,12 @@
 package model
 
+import (
+	"gorm.io/gorm"
+)
+
 type Comment struct {
-	gorm.model
-	Content string `json:"content"`
-	UserID  string `json:"userid"`
+	gorm.Model
+	Content  string `json:"content"`
+	UserID   string `json:"userid"`
+	ThreadID uint   `json:"threadid"`
 }
